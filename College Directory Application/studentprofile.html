@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Profile</title>
+  
+  <a href="otherstudents.html">Search Students</a>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    .profile-container {
+      display: flex;
+      flex-direction: row;
+      margin: 20px;
+    }
+    .profile-photo {
+      margin-right: 20px;
+    }
+    .profile-photo img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+    }
+    .profile-info {
+      flex: 1;
+    }
+    .section-title {
+      font-weight: bold;
+      margin-top: 20px;
+    }
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    .table th, .table td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Student Profile</h1>
+
+  <div class="profile-container">
+    <div class="profile-photo">
+      <img src="profile-placeholder.jpg" alt="Profile Photo" id="profile-photo">
+    </div>
+    <div class="profile-info">
+      <h2 id="student-name">Student Name</h2>
+      <p><strong>Email:</strong> <span id="email"></span></p>
+      <p><strong>Phone:</strong> <span id="phone"></span></p>
+      <p><strong>Address:</strong> <span id="address"></span></p>
+    </div>
+  </div>
+
+  <div class="academic-info">
+    <h2 class="section-title">Academic Information</h2>
+    <table class="table" id="academic-table">
+      <thead>
+        <tr>
+          <th>Course Name</th>
+          <th>Grade</th>
+          <th>Attendance</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Courses will be dynamically inserted here -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    // Simulate fetching the student profile data from an API
+    function fetchStudentProfile() {
+      return {
+        personal: {
+          name: "John Doe",
+          photo: "profile-photo.jpg",
+          email: "john.doe@example.com",
+          phone: "555-1234",
+          address: "123 Main St"
+        },
+        academics: [
+          { course: "Math 101", grade: "A", attendance: "95%" },
+          { course: "English 101", grade: "B+", attendance: "87%" },
+          { course: "History 101", grade: "A-", attendance: "90%" }
+        ]
+      };
+    }
+
+    function displayProfile(data) {
+      document.getElementById("student-name").textContent = data.personal.name;
+      document.getElementById("email").textContent = data.personal.email;
+      document.getElementById("phone").textContent = data.personal.phone;
+      document.getElementById("address").textContent = data.personal.address;
+      document.getElementById("profile-photo").src = data.personal.photo;
+
+      const tableBody = document.querySelector("#academic-table tbody");
+      tableBody.innerHTML = ''; // Clear any existing rows
+
+      data.academics.forEach(course => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${course.course}</td>
+          <td>${course.grade}</td>
+          <td>${course.attendance}</td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+
+    // Simulate API call
+    const profileData = fetchStudentProfile();
+    displayProfile(profileData);
+  </script>
+
+</body>
+</html>

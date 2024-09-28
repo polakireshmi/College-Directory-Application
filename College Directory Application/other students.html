@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search Students</title>
+  <a href="studentprofile.html">View Profile</a>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    .search-container {
+      margin: 20px;
+    }
+    .search-bar {
+      margin-bottom: 20px;
+    }
+    .search-bar input, .search-bar select {
+      padding: 8px;
+      margin-right: 10px;
+      font-size: 16px;
+    }
+    .student-list {
+      margin-top: 20px;
+    }
+    .student-card {
+      border: 1px solid #ddd;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Search Students</h1>
+
+  <div class="search-container">
+    <div class="search-bar">
+      <input type="text" id="search-name" placeholder="Enter student name">
+      <select id="search-department">
+        <option value="">Select Department</option>
+        <option value="CS">Computer Science</option>
+        <option value="ENG">Engineering</option>
+        <!-- More departments can be added here -->
+      </select>
+      <select id="search-year">
+        <option value="">Select Year</option>
+        <option value="1">Year 1</option>
+        <option value="2">Year 2</option>
+        <option value="3">Year 3</option>
+        <option value="4">Year 4</option>
+      </select>
+      <button onclick="searchStudents()">Search</button>
+    </div>
+
+    <div class="student-list" id="student-list">
+      <!-- Search results will be displayed here -->
+    </div>
+  </div>
+
+  <script>
+    // Simulate a database of students
+    const students = [
+      { name: "John Doe", department: "CS", year: "1" },
+      { name: "Jane Smith", department: "ENG", year: "2" },
+      { name: "Sam Wilson", department: "CS", year: "3" },
+      // More students can be added here
+    ];
+
+    function searchStudents() {
+      const name = document.getElementById("search-name").value.toLowerCase();
+      const department = document.getElementById("search-department").value;
+      const year = document.getElementById("search-year").value;
+
+      const results = students.filter(student => {
+        return (!name || student.name.toLowerCase().includes(name)) &&
+               (!department || student.department === department) &&
+               (!year || student.year === year);
+      });
+
+      displaySearchResults(results);
+    }
+
+    function displaySearchResults(results) {
+      const studentList = document.getElementById("student-list");
+      studentList.innerHTML = ''; // Clear any previous results
+
+      if (results.length === 0) {
+        studentList.textContent = 'No students found';
+        return;
+      }
+
+      results.forEach(student => {
+        const studentCard = document.createElement('div');
+        studentCard.classList.add('student-card');
+        studentCard.innerHTML = `
+          <p><strong>Name:</strong> ${student.name}</p>
+          <p><strong>Department:</strong> ${student.department}</p>
+          <p><strong>Year:</strong> ${student.year}</p>
+        `;
+        studentList.appendChild(studentCard);
+      });
+    }
+  </script>
+
+</body>
+</html>
